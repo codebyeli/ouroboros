@@ -1,0 +1,48 @@
+ # Flutter/Dart specific
+ .dart_tool/
+ .flutter-plugins
+ .flutter-plugins-dependencies
+ .packages
+ .pub/
+ build/
+
+ # IDE and editor files
+ .vscode/
+ .idea/
+ *.iml
+ *.ipr
+ *.iws
+ *.lock
+ *.swp
+
+ # Flutter generated files
+ **/ios/Flutter/App.framework/
+ **/ios/Flutter/Flutter.podspec
+ **/ios/Flutter/flutter_export_environment.sh
+ **/ios/Flutter/flutter_assets/
+
+ # Android build files
+ **/android/build/
+ **/android/app/outputs/
+ **/android/app/build/
+
+ # Xcode generated files
+ **/ios/Runner.xcworkspace/
+ **/ios/Pods/
+ **/ios/.symlinks/
+ **/ios/.generated/
+
+ # Gradle files
+ **/*.iml
+ **/*.gradle
+ **/gradle/
+ **/gradlew
+ **/gradlew.bat
+ **/.gradle/
+ **/.idea/
+
+ # Miscellaneous
+ *.log
+ *.lock
+ .idea/
+ .DS_Store
