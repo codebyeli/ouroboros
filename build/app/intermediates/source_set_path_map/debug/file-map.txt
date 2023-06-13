@@ -1,0 +1,12 @@
+dev.codebyeli.ouroborosflutter.app-jetified-window-1.0.0-beta04-0 C:\Users\nomad\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\res
+dev.codebyeli.ouroborosflutter.app-jetified-annotation-experimental-1.1.0-1 C:\Users\nomad\.gradle\caches\transforms-3\6c0c163cc77ae6c91f9f7dfcd179c29c\transformed\jetified-annotation-experimental-1.1.0\res
+dev.codebyeli.ouroborosflutter.app-core-1.6.0-2 C:\Users\nomad\.gradle\caches\transforms-3\7e9df2ac2213a6bd3cef0f2f27870d79\transformed\core-1.6.0\res
+dev.codebyeli.ouroborosflutter.app-jetified-window-java-1.0.0-beta04-3 C:\Users\nomad\.gradle\caches\transforms-3\ae81e06d24c799147c26814497a2a305\transformed\jetified-window-java-1.0.0-beta04\res
+dev.codebyeli.ouroborosflutter.app-debug-4 D:\AndroidProjects\ouroborosflutter\android\app\src\debug\res
+dev.codebyeli.ouroborosflutter.app-main-5 D:\AndroidProjects\ouroborosflutter\android\app\src\main\res
+dev.codebyeli.ouroborosflutter.app-pngs-6 D:\AndroidProjects\ouroborosflutter\build\app\generated\res\pngs\debug
+dev.codebyeli.ouroborosflutter.app-resValues-7 D:\AndroidProjects\ouroborosflutter\build\app\generated\res\resValues\debug
+dev.codebyeli.ouroborosflutter.app-rs-8 D:\AndroidProjects\ouroborosflutter\build\app\generated\res\rs\debug
+dev.codebyeli.ouroborosflutter.app-mergeDebugResources-9 D:\AndroidProjects\ouroborosflutter\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
+dev.codebyeli.ouroborosflutter.app-mergeDebugResources-10 D:\AndroidProjects\ouroborosflutter\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+dev.codebyeli.ouroborosflutter.app-merged_res-11 D:\AndroidProjects\ouroborosflutter\build\app\intermediates\merged_res\debug
