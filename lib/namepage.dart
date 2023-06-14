@@ -18,9 +18,11 @@ class _namescreenState extends State<namescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Image.asset('assets/miniourosicon.png'),
         title: Text(
-          "Ouroboros"
+            "Ouroboros"
         ),
+        backgroundColor: Colors.black,
       ),
       body: Center(
 

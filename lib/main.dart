@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'splash.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: OurosHome(),
+    home: splashscreen(),
   ));
 }
 
@@ -12,7 +13,6 @@ class OurosHome extends StatefulWidget {
   @override
   State<OurosHome> createState() => _OurosHomeState();
 }
-const name = "XD";
 
 class Task {
   String name;
@@ -52,7 +52,7 @@ class _OurosHomeState extends State<OurosHome> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
-                child: Text("Welcome $name!",
+                child: Text("Welcome!",
                 style: TextStyle(fontSize: 40),),
               ),
             ],
