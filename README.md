@@ -1,3 +1,3 @@
 # Ouroboros
 
-Todo list app with enphasis on repetition. Because we are our habits.
+Todo list app with emphasis on repetition. Because we are our habits.
