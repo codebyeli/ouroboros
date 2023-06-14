@@ -14,11 +14,32 @@ class OurosHome extends StatefulWidget {
 }
 const name = "XD";
 
+class Task {
+  String name;
+  bool isCompleted;
+  String? description;
+
+  Task({
+    required this.name,
+    required this.isCompleted,
+    this.description,
+  });
+}
+
+Task myTask = Task(
+  name: 'Task Name',
+  isCompleted: false,
+  description: 'Task Description',
+);
+
+
+
 class _OurosHomeState extends State<OurosHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Image.asset('assets/miniourosicon.png'),
         title: Text(
           "Ouroboros"
         ),
@@ -45,31 +66,37 @@ class _OurosHomeState extends State<OurosHome> {
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-                width: 1.0
-              )
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(20)
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Checkbox(value: false, onChanged: null),
+                  Text(myTask.name),
+                  Spacer(),
+                  IconButton(onPressed: () {}, icon: Icon(
+                    Icons.edit,
+                    size: 35,
+                  )),
+                  IconButton(onPressed: () {}, icon: Icon(
+                      Icons.delete,
+                      size: 35
+                  ))
+                ],
+              ),
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Checkbox(value: false, onChanged: null),
-                Text("Do this"),
-                Spacer(),
-                IconButton(onPressed: () {}, icon: Icon(
-                  Icons.edit,
-                  size: 35,
-                )),
-                IconButton(onPressed: () {}, icon: Icon(
-                    Icons.delete,
-                    size: 35
-                ))
-              ],
-            ),
-          )
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+        backgroundColor: Colors.black,
       ),
     );
   }
