@@ -30,27 +30,44 @@ class _OurosHomeState extends State<OurosHome> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(10,0,0,20),
-                child: Text("Welcome $name"),
-              )
+                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+                child: Text("Welcome $name!",
+                style: TextStyle(fontSize: 40),),
+              ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Checkbox(value: false, onChanged: null),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0,0,196,0),
-                child: Text("Do this"),
-              ),
-              IconButton(onPressed: () {}, icon: Icon(
-                Icons.delete
-              )),
-              IconButton(onPressed: () {}, icon: Icon(
-                  Icons.edit
-              ))
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('These are your tasks for today:')
+              ],
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black,
+                width: 1.0
+              )
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Checkbox(value: false, onChanged: null),
+                Text("Do this"),
+                Spacer(),
+                IconButton(onPressed: () {}, icon: Icon(
+                  Icons.edit,
+                  size: 35,
+                )),
+                IconButton(onPressed: () {}, icon: Icon(
+                    Icons.delete,
+                    size: 35
+                ))
+              ],
+            ),
           )
         ],
       ),
