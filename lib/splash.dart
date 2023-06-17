@@ -22,7 +22,7 @@ class _splashscreenState extends State<splashscreen> {
   }
 
   void _navigateToMain() async {
-    await Future.delayed(Duration(milliseconds: 1500));
+    await Future.delayed(Duration(milliseconds: 2500));
     Navigator.pushReplacement(
       context as BuildContext,
       MaterialPageRoute(builder: (context) => OurosHome()),

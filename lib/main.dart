@@ -27,9 +27,9 @@ class Task {
 }
 
 Task myTask = Task(
-  name: 'Task Name',
+  name: 'Finish this app',
   isCompleted: false,
-  description: 'Task Description',
+  description: 'Ironically, first task in business is to finish this app',
 );
 
 
@@ -76,17 +76,26 @@ class _OurosHomeState extends State<OurosHome> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Checkbox(value: false, onChanged: null),
+                  Checkbox(
+                    value: myTask.isCompleted,
+                    onChanged: (bool? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          myTask.isCompleted = newValue;
+                        });
+                      }
+                    },
+                  ),
                   Text(myTask.name),
                   Spacer(),
                   IconButton(onPressed: () {}, icon: Icon(
                     Icons.edit,
-                    size: 35,
+                    size: 25,
                   )),
                   IconButton(onPressed: () {}, icon: Icon(
                       Icons.delete,
-                      size: 35
-                  ))
+                      size: 25
+                  )),
                 ],
               ),
             ),
