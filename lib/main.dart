@@ -17,19 +17,16 @@ class OurosHome extends StatefulWidget {
 class Task {
   String name;
   bool isCompleted;
-  String? description;
 
   Task({
     required this.name,
     required this.isCompleted,
-    this.description,
   });
 }
 
 Task myTask = Task(
   name: 'Finish this app',
   isCompleted: false,
-  description: 'Ironically, first task in business is to finish this app',
 );
 
 
