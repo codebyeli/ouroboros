@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'splash.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: splashscreen(),
+    home: OurosHome(),
   ));
 }
 
@@ -92,6 +91,93 @@ class DatabaseHelper {
   }
 }
 
+class AddTaskDialog extends StatefulWidget {
+  const AddTaskDialog({Key? key}) : super(key: key);
+
+  @override
+  _AddTaskDialogState createState() => _AddTaskDialogState();
+}
+
+class _AddTaskDialogState extends State<AddTaskDialog> {
+  late TextEditingController _nameController;
+  bool _isCompleted = false;
+  bool _isCycle = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Task Name'),
+                autofocus: true,
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Checkbox(
+                    value: _isCycle,
+                    onChanged: (value) {
+                      setState(() {
+                        _isCycle = value!;
+                      });
+                    },
+                  ),
+                  Text('Daily Task'),
+                ],
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () async {
+                  Task newTask = Task(
+                    name: _nameController.text,
+                    isCompleted: _isCompleted,
+                    isCycle: _isCycle,
+                  );
+
+                  // Add the task to the database
+                  await DatabaseHelper.instance.insertTask(newTask);
+
+                  // Close the dialog
+                  Navigator.of(context).pop();
+
+                  // Clear the text field and reset checkboxes
+                  _nameController.clear();
+                  setState(() {
+                    _isCompleted = false;
+                    _isCycle = false;
+                  });
+
+                  // Refresh the task list after adding a new task
+                  _OurosHomeState()._loadTasks();
+                },
+                child: Text('Add Task'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _OurosHomeState extends State<OurosHome> {
   List<Task> tasks = [];
 
@@ -116,49 +202,61 @@ class _OurosHomeState extends State<OurosHome> {
     _loadTasks();
   }
 
+  Future<void> _showAddTaskDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AddTaskDialog();
+      },
+    );
+
+    // Refresh the task list after adding a new task
+    _loadTasks();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-    leading: Image.asset('assets/miniourosicon.png'),
-    title: Text(
-    "Ouroboros"
-    ),
-    foregroundColor: Colors.white,
-    backgroundColor: Colors.black,
-    ),
-    body: Column(
-      children: [
-        SizedBox(height: 10),
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
-              child: Text("Welcome!",
-                style: TextStyle(fontSize: 40),),
-            ),
-          ],
-        ),
-        if (tasks.isEmpty == false)
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+      appBar: AppBar(
+        leading: Image.asset('assets/miniourosicon.png'),
+        title: Text("Ouroboros"),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.black,
+      ),
+      body: Column(
+        children: [
+          SizedBox(height: 10),
+          Row(
             children: [
-              Text('These are your tasks for today:')
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+                child: Text(
+                  "Welcome!",
+                  style: TextStyle(fontSize: 40),
+                ),
+              ),
             ],
           ),
-        ),
-        if (tasks.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text('Wow, you have no tasks for today!')
-              ],
+          if (tasks.isEmpty == false)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('These are your tasks for today:'),
+                ],
+              ),
             ),
-          ),
+          if (tasks.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('Wow, you have no tasks for today!'),
+                ],
+              ),
+            ),
           for (Task task in tasks)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -184,6 +282,7 @@ class _OurosHomeState extends State<OurosHome> {
                     Spacer(),
                     IconButton(
                       onPressed: () {
+                        // Add logic to edit task
                       },
                       icon: Icon(
                         Icons.edit,
@@ -196,20 +295,20 @@ class _OurosHomeState extends State<OurosHome> {
                       },
                       icon: Icon(Icons.delete, size: 25),
                     ),
-
                   ],
                 ),
               ),
             ),
         ],
       ),
-              floatingActionButton: FloatingActionButton(
-    onPressed: () {},
-    child: Icon(Icons.add),
-                foregroundColor: Colors.white,
-    backgroundColor: Colors.black,
-              )
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddTaskDialog(context);
+        },
+        child: Icon(Icons.add),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.black,
+      ),
     );
   }
 }
-
