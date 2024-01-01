@@ -80,6 +80,21 @@ class DatabaseHelper {
     return await db.insert('tasks', task.toMap());
   }
 
+  Future<void> updateTask(int taskId, Task updatedTask) async {
+    Database db = await instance.database;
+    await db.update(
+      'tasks',
+      {
+        'name': updatedTask.name,
+        'isCompleted': updatedTask.isCompleted ? 1 : 0,
+        'isCycle': updatedTask.isCycle ? 1 : 0,
+      },
+      where: 'id = ?',
+      whereArgs: [taskId],
+    );
+  }
+
+
   Future<List<Task>> getTasks() async {
     Database db = await instance.database;
     List<Map<String, dynamic>> maps = await db.query('tasks');
@@ -201,6 +216,110 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
   }
 }
 
+class EditTaskDialog extends StatefulWidget {
+  final Task task;
+
+  const EditTaskDialog({Key? key, required this.task}) : super(key: key);
+
+  @override
+  _EditTaskDialogState createState() => _EditTaskDialogState();
+}
+
+class _EditTaskDialogState extends State<EditTaskDialog> {
+  late TextEditingController _nameController;
+  bool _isCompleted = false;
+  bool _isCycle = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.task.name);
+    _isCompleted = widget.task.isCompleted;
+    _isCycle = widget.task.isCycle;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: 'Task Name',
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black), // Set the border color when focused
+                  ),
+                ),
+                style: TextStyle(color: Colors.black), // Set the text color
+                cursorColor: Colors.black, // Set the cursor color
+                autofocus: true,
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Checkbox(
+                    value: _isCycle,
+                    activeColor: Colors.black,
+                    onChanged: (value) {
+                      setState(() {
+                        _isCycle = value!;
+                      });
+                    },
+                  ),
+                  Text('Daily Task'),
+                ],
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () async {
+                  Task updatedTask = Task(
+                    name: _nameController.text,
+                    isCompleted: _isCompleted,
+                    isCycle: _isCycle,
+                  );
+
+                  // Update the task in the database
+                  await DatabaseHelper.instance.updateTask(widget.task.id!, updatedTask);
+
+                  // Close the dialog
+                  Navigator.of(context).pop();
+
+                  // Refresh the task list after editing a task
+                  _OurosHomeState()._loadTasks();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                ),
+                child: Text(
+                  'Save Changes',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              )
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _OurosHomeState extends State<OurosHome> {
   List<Task> tasks = [];
 
@@ -234,6 +353,18 @@ class _OurosHomeState extends State<OurosHome> {
     );
 
     // Refresh the task list after adding a new task
+    _loadTasks();
+  }
+
+  Future<void> _showEditTaskDialog(BuildContext context, Task task) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return EditTaskDialog(task: task);
+      },
+    );
+
+    // Refresh the task list after editing a task
     _loadTasks();
   }
 
@@ -305,7 +436,7 @@ class _OurosHomeState extends State<OurosHome> {
                     Spacer(),
                     IconButton(
                       onPressed: () {
-                        // Add logic to edit task
+                        _showEditTaskDialog(context, task);
                       },
                       icon: Icon(
                         Icons.edit,
