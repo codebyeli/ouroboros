@@ -4,6 +4,9 @@ import 'package:path/path.dart';
 
 void main() {
   runApp(MaterialApp(
+    theme: ThemeData(
+      primaryColor: Colors.black, // Set the primary color to black
+    ),
     home: OurosHome(),
   ));
 }
@@ -126,7 +129,17 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             children: [
               TextField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Task Name'),
+                decoration: InputDecoration(
+                  labelText: 'Task Name',
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black), // Set the border color when focused
+                  ),
+                ),
+                style: TextStyle(color: Colors.black), // Set the text color
+                cursorColor: Colors.black, // Set the cursor color
                 autofocus: true,
               ),
               SizedBox(height: 16),
@@ -134,6 +147,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 children: [
                   Checkbox(
                     value: _isCycle,
+                    activeColor: Colors.black,
                     onChanged: (value) {
                       setState(() {
                         _isCycle = value!;
@@ -168,8 +182,17 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   // Refresh the task list after adding a new task
                   _OurosHomeState()._loadTasks();
                 },
-                child: Text('Add Task'),
-              ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                ),
+                child: Text(
+                  'Add Task',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              )
+
             ],
           ),
         ),
