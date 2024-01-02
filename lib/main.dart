@@ -432,7 +432,12 @@ class _OurosHomeState extends State<OurosHome> {
                         }
                       },
                     ),
-                    Text(task.name),
+                Text(
+                  task.name,
+                  style: TextStyle(
+                    decoration: task.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+                  ),
+                ),
                     Spacer(),
                     IconButton(
                       onPressed: () {
